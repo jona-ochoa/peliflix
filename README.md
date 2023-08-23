@@ -2,6 +2,9 @@
 
 ### Consumiendo una api de [THEMOVIEDB](https://developer.themoviedb.org/reference/search-movie)
 
+- email: challenge@alkemy.org
+- password: react
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
