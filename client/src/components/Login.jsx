@@ -21,13 +21,13 @@ function Login() {
       return;
     }
 
-    if (email !== "challenge@alkemy.org" || password !== "react") {
-      swal("Credenciales inválidas", "Vuelve a intentar", "error");
-      return;
-    }
+    // if (!email || !password) {
+    //   swal("Credenciales inválidas", "Vuelve a intentar", "error");
+    //   return;
+    // } 
 
     axios
-      .post("http://challenge-react.alkemy.org", { email, password })
+      .post("http://localhost:3001/api/user", { email, password })
       .then((res) => {
         swal("Ingreso correcto", "Succesfully!!", "success");
         const tokenRecibido = res.data.token;
@@ -42,7 +42,7 @@ function Login() {
   return (
     <>
       { token && <Navigate to="/listado" /> }
-      <div className="row">
+      <div className="row bg-info p-4 mb-4 mx-2">
         <div className="col-6 offset-3">
           <h2>Formulario de Login</h2>
           <form onSubmit={submitHandler}>
