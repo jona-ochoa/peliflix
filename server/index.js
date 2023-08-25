@@ -12,7 +12,9 @@ const app = express();
 
 app.use(morgan("dev"));
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors({
+    origin: ["http://localhost:5173", "https://jonaflix.vercel.app"]
+  }));
 
 app.use('/api', routes)
 

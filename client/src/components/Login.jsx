@@ -22,7 +22,7 @@ function Login() {
     }
 
     axios
-      .post("http://localhost:3001/api/user", { email, password })
+      .post("https://jonaflix-api.vercel.app/api/user", { email, password })
       .then((res) => {
         console.log(res)
         swal("Ingreso correcto", "Succesfully!!", "success");
