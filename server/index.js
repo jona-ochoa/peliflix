@@ -16,7 +16,7 @@ app.use(cors({
     origin: ["http://localhost:5173", "https://jonaflix.vercel.app"]
   }));
 
-app.use('/api', routes)
+app.use('/api/v1', routes)
 
 const server = http.createServer(app);
 
