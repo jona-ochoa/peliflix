@@ -2,6 +2,9 @@ import { Link, NavLink } from "react-router-dom";
 import Buscador from "./Buscador";
 
 const Header = (props) => {
+
+  let token = sessionStorage.getItem('token');
+
   return (
     <header>
       <nav className="navbar navbar-expand navbar-dark bg-dark">
@@ -37,6 +40,9 @@ const Header = (props) => {
             </ul>
           </div>
           <Buscador />
+          {token && 
+          <button className="btn btn-danger mx-2" onClick={props.logout}>Logout</button>
+          }
         </div>
       </nav>
     </header>

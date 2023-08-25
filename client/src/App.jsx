@@ -7,11 +7,13 @@ import Detalle from "./components/Detalle";
 import { Route, Routes } from "react-router-dom";
 import Resultados from "./components/Resultados";
 import swal from 'sweetalert';
+import { useNavigate } from "react-router-dom";
 
 import "./app.css";
 import Favoritos from "./components/Favoritos";
 
 function App() {
+  const navigate = useNavigate();
   const [favorites, setFavorites] = useState([]);
 
   let tempMovies;
@@ -75,9 +77,14 @@ function App() {
     }
   };
 
+  const logout = () => {
+    sessionStorage.removeItem('token');
+    navigate('/')
+  }
+
   return (
     <>
-      <Header favorites={favorites} />
+      <Header favorites={favorites} logout={logout} />
       <div className="container mt-3">
         <Routes>
           <Route path="/" exact element={<Login />} />
