@@ -8,7 +8,7 @@ const userSchema = require("../models/schema/userSchema");
 
 const router = express.Router();
 
-router.post("/user", (req, res) => {
+router.post("/login", (req, res) => {
     const user = userSchema(req.body);
     user
       .save()
@@ -20,7 +20,7 @@ router.post("/user", (req, res) => {
   });
   
   //get all users -- para que desde admin se pueda ver los usuarios
-  router.get("/users", (req, res) => {
+  router.get("/allUsers", (req, res) => {
     const user = userSchema;
     user
       .find()
@@ -29,7 +29,7 @@ router.post("/user", (req, res) => {
   });
   
   //update a user -- para que el usuario pueda cambiar algun dato personal?
-  router.put("/user/:id", (req, res) => {
+  router.put("/:id", (req, res) => {
     const { id } = req.params;
     const { email, password, } = req.body;
     userSchema
@@ -44,7 +44,7 @@ router.post("/user", (req, res) => {
   });
   
   //delete user by id
-  router.delete("/user/:id", (req, res) => {
+  router.delete("/:id", (req, res) => {
     const { id } = req.params;
     userSchema
       .deleteOne({ _id: id })

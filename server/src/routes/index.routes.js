@@ -3,6 +3,6 @@ const userRoutes = require('./user.routes')
 
 const routes = express();
 
-routes.use("/", userRoutes);
+routes.use("/user", userRoutes);
 
 module.exports = routes;
