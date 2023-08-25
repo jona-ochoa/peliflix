@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="py-3 px-4 bg-black">
+    <footer className="py-3 px-4 bg-black fixed-bottom">
       <nav className="container-fluid">
         <ul className="nav nav-pills nav-fill mb-light">
           <li className="nav-item">

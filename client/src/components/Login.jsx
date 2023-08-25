@@ -3,9 +3,8 @@ import swal from "sweetalert";
 import { Navigate, useNavigate } from "react-router-dom";
 
 function Login() {
-
   const getApiUrl = () => {
-    if (window.location.hostname === 'localhost') {
+    if (window.location.hostname === "localhost") {
       return "http://localhost:3001/api/v1/user/login";
     } else {
       return "https://jonaflix-api.vercel.app/api/v1/user/login";
@@ -46,28 +45,32 @@ function Login() {
   return (
     <>
       {token && <Navigate to="/listado" />}
-      <div className="row p-4 mb-4 mx-2">
-        <div className="col-6 offset-3 bg-light">
-          <h2>Formulario de Login</h2>
-          <form onSubmit={submitHandler}>
-            <label className="form-label d-block mt-1">
-              <span className="">Correo electrónico:</span>
+      <div className="d-flex justify-content-center align-items-center">
+          <div className="col-8 bg-dark text-light p-4 rounded">
+            <h2 className="p-2">Formulario de Login</h2>
+            <form className="container-sm h-100" onSubmit={submitHandler}>
+              <label className="form-label d-block mt-1">
+                <span className="">Correo electrónico:</span>
+                <br />
+                <input className="form-control" type="text" name="email" />
+              </label>
               <br />
-              <input className="form-control" type="text" name="email" />
-            </label>
-            <br />
-            <label className="form-label d-block mt-1">
-              <span>Contraseña:</span>
+              <label className="form-label d-block mt-1">
+                <span>Contraseña:</span>
+                <br />
+                <input
+                  className="form-control"
+                  type="password"
+                  name="password"
+                />
+              </label>
               <br />
-              <input className="form-control" type="password" name="password" />
-            </label>
-            <br />
-            <button type="submit" className="btn btn-success w-full">
-              Ingresar
-            </button>
-          </form>
-        </div>
-      </div>
+              <button type="submit" className="btn btn-success form-control">
+                Ingresar
+              </button>
+            </form>
+          </div>
+       </div> 
     </>
   );
 }

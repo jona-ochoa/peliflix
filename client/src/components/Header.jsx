@@ -41,7 +41,7 @@ const Header = (props) => {
           </div>
           <Buscador />
           {token && 
-          <button className="btn btn-danger mx-2" onClick={props.logout}>Logout</button>
+          <button className="btn btn-outline-danger mx-2" onClick={props.logout}>Logout</button>
           }
         </div>
       </nav>

@@ -25,7 +25,7 @@ const Buscador = () => {
         name="keyword"
         placeholder="Buscar..."
       />
-      <button type="submit" className="btn btn-info">
+      <button type="submit" className="btn btn-outline-info">
         Buscar
       </button>
     </form>
