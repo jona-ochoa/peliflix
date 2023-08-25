@@ -31,6 +31,7 @@ const Listado = (props) => {
       {!token && <Navigate to="/" />}
       <div className="row">
         {/* Estructura Base */}
+        <h2>Listado de peliculas</h2>
         {movieList.map((oneMovie, idx) => {
           return (
             <div className="col-3" key={idx}>
