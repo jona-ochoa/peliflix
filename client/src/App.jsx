@@ -3,6 +3,7 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Listado from "./components/Listado";
 import Login from "./components/Login";
+import Register from "./components/Register";
 import Detalle from "./components/Detalle";
 import { Route, Routes } from "react-router-dom";
 import Resultados from "./components/Resultados";
@@ -88,6 +89,7 @@ function App() {
       <div className="container mt-3 d-flex flex-column min-vh-100">
         <Routes>
           <Route path="/" exact element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route
             path="/listado"
             element={<Listado {...{ addOrRemoveFromFavorites }} />}

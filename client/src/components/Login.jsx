@@ -1,6 +1,6 @@
 import axios from "axios";
 import swal from "sweetalert";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, Link } from "react-router-dom";
 
 function Login() {
   const getApiUrl = () => {
@@ -45,32 +45,29 @@ function Login() {
   return (
     <>
       {token && <Navigate to="/listado" />}
-      <div className="d-flex justify-content-center align-items-center">
-          <div className="col-8 bg-dark text-light p-4 rounded">
-            <h2 className="p-2">Formulario de Login</h2>
-            <form className="container-sm h-100" onSubmit={submitHandler}>
-              <label className="form-label d-block mt-1">
-                <span className="">Correo electrónico:</span>
-                <br />
-                <input className="form-control" type="text" name="email" />
-              </label>
+      <div className="d-flex justify-content-center align-items-center min-vh-100">
+        <div className="col-6 bg-dark text-light p-4 rounded">
+          <h2 className="">Formulario de Login</h2>
+          <form className="" onSubmit={submitHandler}>
+            <label className="form-label d-block mt-1">
+              <span className="">Correo electrónico:</span>
               <br />
-              <label className="form-label d-block mt-1">
-                <span>Contraseña:</span>
-                <br />
-                <input
-                  className="form-control"
-                  type="password"
-                  name="password"
-                />
-              </label>
+              <input className="form-control" type="text" name="email" />
+            </label>
+            <br />
+            <label className="form-label d-block mt-1">
+              <span>Contraseña:</span>
               <br />
-              <button type="submit" className="btn btn-success form-control">
-                Ingresar
-              </button>
-            </form>
-          </div>
-       </div> 
+              <input className="form-control" type="password" name="password" />
+            </label>
+            <Link to="/register">¿Quieres Registrarte?</Link>
+            <br />
+            <button type="submit" className="btn btn-success form-control">
+              Ingresar
+            </button>
+          </form>
+        </div>
+      </div>
     </>
   );
 }
