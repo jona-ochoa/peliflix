@@ -85,7 +85,7 @@ function App() {
   return (
     <>
       <Header favorites={favorites} logout={logout} />
-      <div className="container mt-3">
+      <div className="container mt-3 d-flex flex-column min-vh-100">
         <Routes>
           <Route path="/" exact element={<Login />} />
           <Route

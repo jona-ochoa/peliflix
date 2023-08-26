@@ -6,10 +6,35 @@ import swal from "sweetalert";
 const Listado = (props) => {
   let token = sessionStorage.getItem("token");
   const [movieList, setMovieList] = useState([]);
-  
+  const [tvList, setTvList] = useState([]);
+  const [currentContentType, setCurrentContentType] = useState("movies");
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
   useEffect(() => {
+    const endpointTV =
+      `https://api.themoviedb.org/3/discover/tv?api_key=539fab34d2cc6ed437e24d54b820b2ad&language=es-ES&page=${currentPage}`
+
     const endpoint =
-      "https://api.themoviedb.org/3/discover/movie?api_key=539fab34d2cc6ed437e24d54b820b2ad&language=es-ES&page=1";
+      `https://api.themoviedb.org/3/discover/movie?api_key=539fab34d2cc6ed437e24d54b820b2ad&language=es-ES&page=${currentPage}`
+
+    axios
+      .get(endpointTV)
+      .then((res) => {
+        const apiDataTv = res.data.results;
+        console.log(apiDataTv);
+        setTvList(apiDataTv);
+      })
+      .catch((error) => {
+        swal(
+          `Error del servidor: ${error}`,
+          "Vuelve a intentar en otro momento",
+          "error"
+        );
+      });
 
     axios
       .get(endpoint)
@@ -24,15 +49,112 @@ const Listado = (props) => {
           "error"
         );
       });
-  }, [setMovieList]);
+  }, [setMovieList, setTvList, currentPage]);
 
   return (
     <>
       {!token && <Navigate to="/" />}
+      <div className="d-flex gap-2">
+        <button
+          className="btn btn-outline-primary"
+          onClick={() => setCurrentContentType("movies")}
+        >
+          Mostrar Películas
+        </button>
+        <button
+          className="btn btn-outline-primary"
+          onClick={() => setCurrentContentType("tv")}
+        >
+          Mostrar TV
+        </button>
+        
+          <button className="btn btn-outline-secondary" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>Anterior</button>
+          <h2>{currentPage}</h2>
+          <button className="btn btn-outline-secondary" onClick={() => handlePageChange(currentPage + 1)}>Siguiente</button>
+       
+      </div>
+
       <div className="row">
-        {/* Estructura Base */}
-        <h2>Listado de peliculas</h2>
-        {movieList.map((oneMovie, idx) => {
+        <h2>
+          Listado de {currentContentType === "movies" ? "películas" : "TVs"}
+        </h2>
+        {currentContentType === "movies" ? (
+          <>
+            {" "}
+            {movieList.map((oneMovie, idx) => {
+              return (
+                <div className="col-3" key={idx}>
+                  <div className="card my-4">
+                    <img
+                      src={`https://image.tmdb.org/t/p/w500/${oneMovie.poster_path}`}
+                      className="card-img-top"
+                      alt="image"
+                    />
+                    <button
+                      className="favourite-btn"
+                      data-movie-id={oneMovie.id}
+                      onClick={props.addOrRemoveFromFavorites}
+                    >
+                      🖤
+                    </button>
+                    <div className="card-body">
+                      <h5 className="card-title">
+                        {oneMovie.title.substring(0, 20)}...
+                      </h5>
+                      <p className="card-text">
+                        {oneMovie.overview.substring(0, 100)}...
+                      </p>
+                      <Link
+                        to={`/detalle?movieId=${oneMovie.id}`}
+                        className="btn btn-primary"
+                      >
+                        View Detail
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </>
+        ) : (
+          <>
+            {tvList.map((oneTv, idx) => {
+              return (
+                <div className="col-3" key={idx}>
+                  <div className="card my-4">
+                    <img
+                      src={`https://image.tmdb.org/t/p/w500/${oneTv.poster_path}`}
+                      className="card-img-top"
+                      alt="image"
+                    />
+                    <button
+                      className="favourite-btn"
+                      data-movie-id={oneTv.id}
+                      onClick={props.addOrRemoveFromFavorites}
+                    >
+                      🖤
+                    </button>
+                    <div className="card-body">
+                      <h5 className="card-title">
+                        {oneTv.name.substring(0, 20)}...
+                      </h5>
+                      <p className="card-text">
+                        {oneTv.overview.substring(0, 100)}...
+                      </p>
+                      <Link
+                        to={`/detalle?movieId=${oneTv.id}`}
+                        className="btn btn-primary"
+                      >
+                        View Detail
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </>
+        )}
+        {/* {movieList.map((oneMovie, idx) => {
           return (
             <div className="col-3" key={idx}>
               <div className="card my-4">
@@ -58,7 +180,35 @@ const Listado = (props) => {
               </div>
             </div>
           );
-        })}
+        })} */}
+
+        {/* {tvList.map((oneTv, idx) => {
+          return (
+            <div className="col-3" key={idx}>
+              <div className="card my-4">
+                <img
+                  src={`https://image.tmdb.org/t/p/w500/${oneTv.poster_path}`}
+                  className="card-img-top"
+                  alt="image"
+                />
+                <button className="favourite-btn" data-movie-id={oneTv.id} onClick={props.addOrRemoveFromFavorites}>
+                 🖤
+                  </button>
+                <div className="card-body">
+                  <h5 className="card-title">
+                    {oneTv.name.substring(0, 20)}...
+                  </h5>
+                  <p className="card-text">
+                    {oneTv.overview.substring(0, 100)}...
+                  </p>
+                  <Link to={`/detalle?movieId=${oneTv.id}`} className="btn btn-primary">
+                    View Detail
+                  </Link>
+                </div>
+              </div>
+            </div>
+          );
+        })} */}
       </div>
     </>
   );
