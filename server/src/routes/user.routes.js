@@ -18,6 +18,18 @@ router.post("/login", (req, res) => {
       })
       .catch((error) => res.json({ message: error }));
   });
+
+  router.post("/register", (req, res) => {
+    const newUser = new userSchema(req.body);
+    newUser
+      .save()
+      .then((data) => {
+        res.json({ success: true, message: "Usuario registrado exitosamente", user: data });
+      })
+      .catch((error) => {
+        res.json({ success: false, message: "Error al registrar el usuario", error: error });
+      });
+  });
   
   //get all users -- para que desde admin se pueda ver los usuarios
   router.get("/allUsers", (req, res) => {

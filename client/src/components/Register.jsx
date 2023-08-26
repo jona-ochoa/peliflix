@@ -6,9 +6,9 @@ const Register = () => {
     const navigate = useNavigate();
     const getApiUrl = () => {
         if (window.location.hostname === "localhost") {
-          return "http://localhost:3001/api/v1/user/login";
+          return "http://localhost:3001/api/v1/user/register";
         } else {
-          return "https://jonaflix-api.vercel.app/api/v1/user/login";
+          return "https://jonaflix-api.vercel.app/api/v1/user/register";
         }
       };
       const apiUrl = getApiUrl();
