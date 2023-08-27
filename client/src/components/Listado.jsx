@@ -10,22 +10,34 @@ const Listado = (props) => {
   const [currentContentType, setCurrentContentType] = useState("movies");
   const [currentPage, setCurrentPage] = useState(1);
 
+  const maxPage = 1000;
+
+  const generatePageNumbers = () => {
+    const pageNumbers = [];
+    let startPage = Math.max(currentPage - 4, 1); 
+    let endPage = Math.min(startPage + 9, maxPage);
+
+    while (startPage <= endPage) {
+      pageNumbers.push(startPage);
+      startPage++;
+    }
+
+    return pageNumbers;
+  };
+
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
 
   useEffect(() => {
-    const endpointTV =
-      `https://api.themoviedb.org/3/discover/tv?api_key=539fab34d2cc6ed437e24d54b820b2ad&language=es-ES&page=${currentPage}`
+    const endpointTV = `https://api.themoviedb.org/3/discover/tv?api_key=539fab34d2cc6ed437e24d54b820b2ad&language=es-ES&page=${currentPage}`;
 
-    const endpoint =
-      `https://api.themoviedb.org/3/discover/movie?api_key=539fab34d2cc6ed437e24d54b820b2ad&language=es-ES&page=${currentPage}`
+    const endpoint = `https://api.themoviedb.org/3/discover/movie?api_key=539fab34d2cc6ed437e24d54b820b2ad&language=es-ES&page=${currentPage}`;
 
     axios
       .get(endpointTV)
       .then((res) => {
         const apiDataTv = res.data.results;
-        console.log(apiDataTv);
         setTvList(apiDataTv);
       })
       .catch((error) => {
@@ -54,7 +66,7 @@ const Listado = (props) => {
   return (
     <>
       {!token && <Navigate to="/" />}
-      <div className="d-flex gap-2">
+      <div className="d-flex justify-content-between">
         <button
           className="btn btn-outline-primary"
           onClick={() => setCurrentContentType("movies")}
@@ -67,11 +79,32 @@ const Listado = (props) => {
         >
           Mostrar TV
         </button>
+
+        <button
+          className="btn btn-primary"
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Anterior
+        </button>
         
-          <button className="btn btn-outline-secondary" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>Anterior</button>
-          <h2>{currentPage}</h2>
-          <button className="btn btn-outline-secondary" onClick={() => handlePageChange(currentPage + 1)}>Siguiente</button>
-       
+         {generatePageNumbers().map((pageNumber) => (
+          <button
+            key={pageNumber}
+            className={`btn btn-outline-primary me-2 ${currentPage === pageNumber ? "active" : ""}`}
+            onClick={() => handlePageChange(pageNumber)}
+          >
+            {pageNumber}
+          </button>
+        ))}
+
+        <button
+          className="btn btn-primary"
+          disabled={currentPage === maxPage}
+          onClick={() => handlePageChange(currentPage + 1)}
+        >
+          Siguiente
+        </button>
       </div>
 
       <div className="row">
