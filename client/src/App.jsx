@@ -10,6 +10,8 @@ import Resultados from "./components/Resultados";
 import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
 
+import { Analytics } from '@vercel/analytics/react';
+
 import "./app.css";
 import Favoritos from "./components/Favoritos";
 import DetalleTv from "./components/DetalleTv";
@@ -123,6 +125,7 @@ function App() {
         </Routes>
       </div>
       <Footer />
+      <Analytics />
     </>
   );
 }
