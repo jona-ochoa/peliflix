@@ -36,14 +36,20 @@ const Register = () => {
         }
     
         axios.post(apiUrl, { email, password }).then((res) => {
-            if (res.data.success) {
-              swal("Registrado con éxito!!", "Successfully!!", "success");
-              navigate('/');
-            } else {
-              swal("Error al registrar", "Vuelve a intentar", "error");
-            }
+          console.log(res.data)
+          if (res.data.success) {
+            swal("¡Registro Exitoso!", "Ahora puedes iniciar sesión.", "success");
+            navigate('/');
+          }
           }).catch((error) => {
+            if(error.res.status === 400){
             swal(`Error: ${error}`, "Vuelve a intentar", "error");
+            } else if(error.res.status === 404){
+              swal(`Error 404`, "Vuelve a intentar", "error");
+              }
+              else if(error.res.status === 500){
+                swal(`Error: ${error}`, "Vuelve a intentar", "error");
+                }
           });
       };
 

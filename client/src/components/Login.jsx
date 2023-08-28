@@ -32,12 +32,21 @@ function Login() {
     }
 
     axios.post(apiUrl, { email, password }).then((res) => {
-      console.log(res);
-      swal("Ingreso correcto", "Succesfully!!", "success");
       const tokenRecibido = res.data.token;
       sessionStorage.setItem("token", tokenRecibido);
+      swal("Ingreso correcto", "", "success");
       navigate("/listado");
-    });
+    }).catch((error) => {
+      if (error.response) {
+        if (error.response.status === 401) {
+          swal("Credenciales incorrectas", "Intenta nuevamente", "error");
+        } else if(error.response.status === 404) {
+          swal("Error 404 de inicio de sesión", "Hubo un problema al intentar iniciar sesión", "error");
+        }
+      } else {
+        swal("Error 500", "No se pudo conectar al servidor", "error");
+      }
+    })
   };
 
   let token = sessionStorage.getItem("token");

@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
 import swal from "sweetalert";
 
 const Resultados = () => {
+  let token = sessionStorage.getItem("token");
   let query = new URLSearchParams(window.location.search);
   let keyword = query.get("keyword");
 
@@ -13,14 +14,14 @@ const Resultados = () => {
     const endpoint = `https://api.themoviedb.org/3/search/movie?api_key=539fab34d2cc6ed437e24d54b820b2ad&language=es-Es&query=${keyword}`;
     axios
       .get(endpoint)
-      .then(response => {
+      .then((response) => {
         const movieArray = response.data.results;
-        if(movieArray.length === 0){
-            swal(
-                `Tu busqueda no encontro resultados`,
-                "Vuelve a intentar en otro momento",
-                "error"
-              );
+        if (movieArray.length === 0) {
+          swal(
+            `Tu busqueda no encontro resultados`,
+            "Vuelve a intentar en otro momento",
+            "error"
+          );
         }
         setMovieResults(movieArray);
       })
@@ -29,13 +30,17 @@ const Resultados = () => {
       });
   }, [keyword]);
 
-
   return (
-    <div className="row">
-      <h2>Seccion de Resultados</h2>
-      <h5>Resultados encontrados: <em>{keyword}</em></h5>
-      {movieResults.length === 0 && <h3>No se encontro resultados</h3>}
-      {movieResults.map((oneMovie, idx) => {
+    <>
+      {!token && <Navigate to="/" />}
+
+      <div className="row">
+        <h2>Seccion de Resultados</h2>
+        <h5>
+          Resultados encontrados: <em>{keyword}</em>
+        </h5>
+        {movieResults.length === 0 && <h3>No se encontro resultados</h3>}
+        {movieResults.map((oneMovie, idx) => {
           return (
             <div className="col-4" key={idx}>
               <div className="card my-4">
@@ -48,7 +53,10 @@ const Resultados = () => {
                   <h5 className="card-title">
                     {oneMovie.title.substring(0, 30)}...
                   </h5>
-                  <Link to={`/detalle?movieId=${oneMovie.id}`} className="btn btn-primary">
+                  <Link
+                    to={`/detalle?movieId=${oneMovie.id}`}
+                    className="btn btn-primary"
+                  >
                     View Detail
                   </Link>
                 </div>
@@ -56,7 +64,8 @@ const Resultados = () => {
             </div>
           );
         })}
-    </div>
+      </div>
+    </>
   );
 };
 

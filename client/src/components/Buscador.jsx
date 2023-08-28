@@ -18,6 +18,7 @@ const Buscador = () => {
   };
 
   return (
+    <>
     <form onSubmit={handleSubmit} className="form d-flex">
       <input
         className="form-control mx-1"
@@ -29,6 +30,7 @@ const Buscador = () => {
         Buscar
       </button>
     </form>
+    </>
   );
 };
 
